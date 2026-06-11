@@ -12,9 +12,17 @@
 
 ### 用 skills.sh CLI（推荐）
 
+精确安装本仓库中的 `web-app-test` skill：
+
 ```bash
-npx skills add Mencius2023/skills
+# 装到当前项目
+npx skills add Mencius2023/skills@web-app-test
+
+# 装到全局（所有项目共享）
+npx skills add Mencius2023/skills@web-app-test -g -y
 ```
+
+> `@web-app-test` 精确指定仓库中的某个 skill。省略它（`npx skills add Mencius2023/skills`）会安装仓库内全部 skill —— 仓库内多于一个 skill 时会让你选择。
 
 ### 手动安装到全局（所有项目共享）
 
