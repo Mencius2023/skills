@@ -1,0 +1,17 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Node / Playwright（若 skill 内将来有 JS 依赖或测试产物）
+node_modules/
+test-results/
+playwright-report/
+*.log
+
+# Python
+__pycache__/
+*.pyc
+.venv/
