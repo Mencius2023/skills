@@ -9,8 +9,9 @@
 //   B. 浏览器流程（Playwright 驱动浏览器）—— 【不预先写满】，由 AI 动态测完判断需回归后
 //      才沉淀到此处；下方浏览器用例仅为「页面加载」「核心全流程」两条稳定示例骨架
 //
-// 脆弱、易变的浏览器 UI 交互不写在这里，由 AI 动态接入浏览器执行（参考 ../L4_OPERATION_GUIDE.md）；
+// 脆弱、易变的浏览器 UI 交互不写在这里，由 AI 动态接入浏览器执行（参考 ../E2E_OPERATION_GUIDE.md）；
 // 测完判断需回归且流程稳定，再补充为下方 describe 中的一条 test 并登记到附录 D。
+// 用例 ID 用 TEST_SPECIFICATION.md 的 域.序 编号（下方注释里的 1.3/2.3/1.4/2.4 为示例）。
 import { test, expect } from '@playwright/test'
 
 const BACKEND = 'http://localhost:<后端端口>'
@@ -24,7 +25,7 @@ const FIXTURE = {
 // A. API 契约断言（纯 HTTP，不经浏览器，稳定可批量复跑）— 落地即写，覆盖主要端点
 // ---------------------------------------------------------------------------
 test.describe('<产品名> API 契约', () => {
-  // T4-A1 健康检查与配置
+  // 1.3 健康检查与配置（API）
   test('健康检查与配置', async ({ request }) => {
     const health = await request.get(`${BACKEND}/api/health`)
     expect(health.ok()).toBeTruthy()
@@ -36,7 +37,7 @@ test.describe('<产品名> API 契约', () => {
     expect(configBody).toHaveProperty('<关键配置字段>')
   })
 
-  // T4-A2 API 错误处理
+  // 2.3 API 错误处理（API）
   test('错误处理', async ({ request }) => {
     const r1 = await request.post(`${BACKEND}/api/<主端点>`, { data: {} })
     expect([400, 422]).toContain(r1.status())
@@ -45,7 +46,7 @@ test.describe('<产品名> API 契约', () => {
     expect(r2.status()).toBe(404)
   })
 
-  // T4-An <其他主要端点的契约用例，如 CRUD>
+  // <域.序> <其他主要端点的契约用例，如 CRUD>（API）
   // test('<用例名>', async ({ request }) => { ... })
 })
 
@@ -59,13 +60,13 @@ test.describe('<产品名> 浏览器流程（真实后端）', () => {
     await expect(page.locator('[data-testid=<主输入元素>]')).toBeVisible({ timeout: 20000 })
   })
 
-  // T4-B1 页面加载与初始状态
+  // 1.4 页面加载与初始状态（E2E）
   test('页面加载与初始状态', async ({ page }) => {
     await expect(page.locator('[data-testid=<配置元素>]')).toHaveValue('<默认值>')
     await expect(page.locator('[data-testid=<主按钮>]')).toBeVisible()
   })
 
-  // T4-B2 核心业务全流程
+  // 2.4 核心业务全流程（E2E）
   test('核心业务全流程', async ({ page }) => {
     await page.locator('[data-testid=<主输入元素>]').fill('<示例输入>')
     await page.locator('[data-testid=<主按钮>]').click()
